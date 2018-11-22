@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 
 import tensorflow as tf
 from layers import initializer, regularizer, residual_block, highway, conv, mask_logits, trilinear, total_params, \

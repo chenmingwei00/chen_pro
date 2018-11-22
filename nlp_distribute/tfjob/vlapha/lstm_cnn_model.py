@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import tensorflow as tf
 from func import cudnn_gru, native_gru, dot_attention, summ, dropout, ptr_net
 from layers import initializer, regularizer, residual_block, highway, conv, mask_logits, trilinear, total_params, \

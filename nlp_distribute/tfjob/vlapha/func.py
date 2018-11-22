@@ -1,3 +1,5 @@
+#-*- coding: utf-8 -*-
+
 import tensorflow as tf
 
 INF = 1e30

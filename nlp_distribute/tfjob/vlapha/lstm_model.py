@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import tensorflow as tf
 from func import cudnn_gru, native_gru, dot_attention, summ, dropout, ptr_net,dot_attention_rnet
 
