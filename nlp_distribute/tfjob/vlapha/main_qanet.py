@@ -9,7 +9,6 @@ import os
 import json
 from lstm_model_addlstm import Model
 from util import get_record_parser, convert_tokens, evaluate, get_batch_dataset, get_dataset
-import matplotlib.pyplot as plt
 import numpy as np
 
 
@@ -49,11 +48,6 @@ def train(config):
     lr = config.init_lr
 
     with tf.Session(config=config_sess) as sess:
-        fig = plt.figure()
-        ax = fig.add_subplot(211)
-        ax2 = fig.add_subplot(212)
-        plt.grid(True)
-        plt.ion()
         writer = tf.summary.FileWriter(config.log_dir)
         ckpt = tf.train.get_checkpoint_state(config.save_dir)
         if ckpt is not None:
@@ -72,9 +66,6 @@ def train(config):
                                                      feed_dict={handle: train_handle})
                 # print(logits)
                 # print(np.array(real_y),"hhhhhhhhhhhhhhhhhhhhhhhh")
-                if global_step%10==0:
-                    ax.scatter(global_step, loss, c='b', marker='.')
-                    plt.pause(0.001)
                 print("the loss is:",loss)
                 print('the accuracy is',accuracy)
                 if global_step % config.period == 0:
@@ -86,9 +77,6 @@ def train(config):
                     for k in range(500):
                         dev_loss+= sess.run([model.accuracy],feed_dict={handle:dev_handle})[0]
                     dev_loss=dev_loss/500
-                    ax2.scatter(global_step, dev_loss, c='b', marker='.')
-                    plt.pause(0.001)
-
 
                     # _, summ = evaluate_batch(
                     #     model1111111, config.val_num_batches, train_eval_file, sess, "train", handle, train_handle)
@@ -112,9 +100,6 @@ def train(config):
                         filename = os.path.join(
                             config.save_dir, "model_{}.ckpt".format(global_step))
                         model.saver.save(sess, filename)
-                        figure_path=os.path.join(config.save_dir,'img.png')
-                        print(figure_path,"ttttttttttttttttttttttttttttttttttt")
-                        plt.savefig(figure_path)
                     # sess.run(tf.assign(model.lr, tf.constant(lr, dtype=tf.float32)))
                     # for s in summ:
                     loss_sum = tf.Summary(value=[tf.Summary.Value(tag="model/loss_dev", simple_value=dev_loss)])
